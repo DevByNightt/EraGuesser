@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌍 EraGuesser
 
 **EraGuesser** est un jeu multijoueur interactif pensé pour être joué "en présentiel" (dans une salle de classe, un amphithéâtre ou un salon). 
@@ -64,3 +65,14 @@ Le client s'occupe de l'affichage, de l'esthétique et de l'interaction (tactile
 *   **HTML5, CSS3, JavaScript (Vanilla)** : Les standards fondateurs du Web. Ils structurent les pages de jeu, les rendent visuellement belles (couleurs, polices, design organisé) et interactives. "Vanilla" signifie que la logique côté navigateur n'utilise pas de gros frameworks supplémentaires (comme React ou Vue), pour rester léger et facile à lire.
 *   **Leaflet.js** : C'est la librairie qui permet d'afficher les cartes interactives (planisphères). Légère et performante, elle s'occupe de gérer le placement des "punaises" colorées et le tracé des lignes de distance.
 *   **OpenStreetMap** : C'est la base de données cartographique (le fond de carte) utilisée. Elle est libre, communautaire, et s'intègre parfaitement avec Leaflet pour afficher les rues et les pays du monde entier.
+=======
+# Eraguesser
+pour clone :  
+`https://<votre-username>:<pat>@github.com/DevByNightt/EraGuesser.git`
+
+si vous avez pas de pat allez à [settings/tokens](https://github.com/settings/tokens) et créez  
+
+ou svv vs tapez votre mdp à chaque fois
+## mode d'emploi
+à remplir quand g compris cmt ça marche
+>>>>>>> e706c3bf42fdc34f9bdbe57265fddf9bb8d40119
