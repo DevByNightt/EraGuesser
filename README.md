@@ -1,5 +1,13 @@
-<<<<<<< HEAD
-# 🌍 EraGuesser
+# EraGuesser
+pour clone :  
+`https://<votre-username>:<pat>@github.com/DevByNightt/EraGuesser.git`
+
+si vous avez pas de pat allez à [settings/tokens](https://github.com/settings/tokens) et créez  
+
+ou svv vs tapez votre mdp à chaque fois
+## mode d'emploi
+à remplir quand g compris cmt ça marche
+
 
 **EraGuesser** est un jeu multijoueur interactif pensé pour être joué "en présentiel" (dans une salle de classe, un amphithéâtre ou un salon). 
 Inspiré de jeux comme GeoGuessr ou TimeGuessr, le but est simple : **deviner le lieu et l'année d'une photographie historique**.
@@ -10,7 +18,7 @@ L'originalité d'EraGuesser réside dans son format :
 
 ---
 
-## 🎮 Comment jouer ?
+## Comment jouer ?
 
 ### Pour l'Hôte (celui qui organise la partie)
 1. Téléchargez et installez **Node.js** (https://nodejs.org/) sur votre ordinateur (c'est le moteur logiciel qui fait tourner le jeu).
@@ -26,7 +34,7 @@ L'originalité d'EraGuesser réside dans son format :
 
 ---
 
-## 🏆 Déroulement d'une manche et Règles
+## Déroulement d'une manche et Règles
 
 Une partie se déroule en plusieurs manches chronométrées. Pour chaque manche :
 
@@ -40,7 +48,7 @@ Le joueur qui cumule le plus de points à la fin de toutes les manches est décl
 
 ---
 
-## 🛠️ Stack Technique (Langages & Librairies)
+## Stack Technique (Langages & Librairies)
 
 Ce projet a été pensé comme une "Web App" (application web). Cela signifie qu'**aucun joueur n'a besoin de télécharger d'application** sur les grands "stores" (App Store, Google Play...). Tout fonctionne directement dans le navigateur internet habituel (Chrome, Safari, Firefox). 
 
@@ -65,14 +73,3 @@ Le client s'occupe de l'affichage, de l'esthétique et de l'interaction (tactile
 *   **HTML5, CSS3, JavaScript (Vanilla)** : Les standards fondateurs du Web. Ils structurent les pages de jeu, les rendent visuellement belles (couleurs, polices, design organisé) et interactives. "Vanilla" signifie que la logique côté navigateur n'utilise pas de gros frameworks supplémentaires (comme React ou Vue), pour rester léger et facile à lire.
 *   **Leaflet.js** : C'est la librairie qui permet d'afficher les cartes interactives (planisphères). Légère et performante, elle s'occupe de gérer le placement des "punaises" colorées et le tracé des lignes de distance.
 *   **OpenStreetMap** : C'est la base de données cartographique (le fond de carte) utilisée. Elle est libre, communautaire, et s'intègre parfaitement avec Leaflet pour afficher les rues et les pays du monde entier.
-=======
-# Eraguesser
-pour clone :  
-`https://<votre-username>:<pat>@github.com/DevByNightt/EraGuesser.git`
-
-si vous avez pas de pat allez à [settings/tokens](https://github.com/settings/tokens) et créez  
-
-ou svv vs tapez votre mdp à chaque fois
-## mode d'emploi
-à remplir quand g compris cmt ça marche
->>>>>>> e706c3bf42fdc34f9bdbe57265fddf9bb8d40119
