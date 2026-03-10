@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Statue_of_Liberty%2C_NY.jpg/800px-Statue_of_Liberty%2C_NY.jpg",
+        "year": 1886,
+        "location": {
+            "lat": 40.6892,
+            "lng": -74.0445
+        },
+        "description": "Inauguration de la Statue de la Liberté"
+    },
+    {
+        "id": 2,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Eiffel_Tower_during_the_1889_Exposition_Universelle.jpg/640px-Eiffel_Tower_during_the_1889_Exposition_Universelle.jpg",
+        "year": 1889,
+        "location": {
+            "lat": 48.8584,
+            "lng": 2.2945
+        },
+        "description": "Tour Eiffel à l'Exposition Universelle"
+    },
+    {
+        "id": 3,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Moon_landing_aldrin_apollo_11.jpg/800px-Moon_landing_aldrin_apollo_11.jpg",
+        "year": 1969,
+        "location": {
+            "lat": 28.5721,
+            "lng": -80.6480
+        },
+        "description": "Apollo 11 (Lancement depuis Cap Canaveral)"
+    },
+    {
+        "id": 4,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Berlin_Wall_1989_fall.jpg/800px-Berlin_Wall_1989_fall.jpg",
+        "year": 1989,
+        "location": {
+            "lat": 52.5163,
+            "lng": 13.3777
+        },
+        "description": "Chute du Mur de Berlin"
+    },
+    {
+        "id": 5,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/T-Ford_1910.jpg/800px-T-Ford_1910.jpg",
+        "year": 1908,
+        "location": {
+            "lat": 42.368,
+            "lng": -83.103
+        },
+        "description": "Première Ford Model T (Détroit)"
+    },
+    {
+        "id": 6,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Brazil-Brasilia-Congresso_Nacional-01.jpg/800px-Brazil-Brasilia-Congresso_Nacional-01.jpg",
+        "year": 1960,
+        "location": {
+            "lat": -15.7975,
+            "lng": -47.8919
+        },
+        "description": "Inauguration de Brasilia"
+    },
+    {
+        "id": 7,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Sydney_Opera_House_-_Dec_2008.jpg/800px-Sydney_Opera_House_-_Dec_2008.jpg",
+        "year": 1973,
+        "location": {
+            "lat": -33.8568,
+            "lng": 151.2153
+        },
+        "description": "Ouverture de l'Opéra de Sydney"
+    },
+    {
+        "id": 8,
+        "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/RMS_Titanic_departing_Southampton_on_April_10%2C_1912.jpg/800px-RMS_Titanic_departing_Southampton_on_April_10%2C_1912.jpg",
+        "year": 1912,
+        "location": {
+            "lat": 50.9097,
+            "lng": -1.4044
+        },
+        "description": "Départ du Titanic (Southampton)"
+    }
+]
