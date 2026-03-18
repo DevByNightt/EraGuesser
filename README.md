@@ -5,10 +5,9 @@ pour clone :
 si vous avez pas de pat allez à [settings/tokens](https://github.com/settings/tokens) et créez  
 
 ou svv vs tapez votre mdp à chaque fois
-## mode d'emploi
-à remplir quand g compris cmt ça marche
 
 
+## Introduction
 **EraGuesser** est un jeu multijoueur interactif pensé pour être joué "en présentiel" (dans une salle de classe, un amphithéâtre ou un salon). 
 Inspiré de jeux comme GeoGuessr ou TimeGuessr, le but est simple : **deviner le lieu et l'année d'une photographie historique**.
 
