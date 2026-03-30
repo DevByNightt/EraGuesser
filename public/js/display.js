@@ -101,8 +101,17 @@ socket.on('roundResult', (data) => {
     // Map Slam Animation
     const resultMap = document.getElementById('result-map');
     resultMap.classList.remove('animate-slam');
+    
+    // Context Memo Updates
+    document.getElementById('context-year').textContent = data.correctYear;
+    document.getElementById('context-desc').textContent = data.description;
+    const contextCard = document.getElementById('context-card');
+    contextCard.classList.remove('animate-context');
+    
     void resultMap.offsetWidth; // Reflow
+    
     resultMap.classList.add('animate-slam');
+    contextCard.classList.add('animate-context');
 
     setTimeout(() => {
         map.invalidateSize();
@@ -119,7 +128,7 @@ socket.on('roundResult', (data) => {
 
         correctMarker = L.marker([data.correctLocation.lat, data.correctLocation.lng], { icon: correctIcon })
             .addTo(map)
-            .bindPopup(`<b>${data.description}</b><br>Année: ${data.correctYear}`)
+            .bindPopup(`<b style="font-size: 1.1rem; color: var(--color-ink);">${data.correctCountry}</b>`)
             .openPopup();
 
         // Show Player Guesses

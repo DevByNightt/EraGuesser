@@ -216,6 +216,7 @@ function endRound() {
         correctLocation: correct.location,
         correctYear: correct.year,
         description: correct.description,
+        correctCountry: correct.country,
         playerResults: results
     });
 

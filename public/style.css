@@ -456,6 +456,12 @@ button:disabled {
     animation: slamDown 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
+.animate-context {
+    animation: dropIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    animation-delay: 0.5s; /* Wait for map slam down */
+    opacity: 0;
+}
+
 @keyframes stabIn {
     0% {
         transform: translateX(-50%) scale(3) rotate(-20deg);
@@ -552,5 +558,39 @@ button:disabled {
     display: flex;
     justify-content: space-between;
     border-bottom: 2px dotted rgba(0,0,0,0.4);
+    font-weight: bold;
+}
+
+/* Context Memo Card */
+#context-card {
+    position: absolute;
+    bottom: -10px;
+    right: 15px;
+    width: 35%;
+    max-height: 48%;
+    padding: 2.5rem;
+    background: #fdf5e6;
+    background-image: repeating-linear-gradient(transparent, transparent 29px, #ccc 30px);
+    border: 1px solid #d2b48c;
+    box-shadow: 10px 10px 30px rgba(0,0,0,0.6);
+    z-index: 150;
+    overflow-y: auto;
+    /* transform handled by animation */
+}
+
+#context-year {
+    color: var(--color-blood-red);
+    font-size: 4.5rem;
+    margin: 0;
+    text-align: center;
+    border-bottom: 2px dashed var(--color-ink);
+    padding-bottom: 10px;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+}
+
+#context-desc {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    margin-top: 15px;
     font-weight: bold;
 }

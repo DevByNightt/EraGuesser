@@ -7,7 +7,8 @@
             "lat": 34.384919,
             "lng": 109.273108
         },
-        "description": "Armée de terre cuite (Terracotta Army)"
+        "description": "Armée de terre cuite (Terracotta Army)",
+        "country": "Chine"
     },
     {
         "id": 2,
@@ -17,7 +18,8 @@
             "lat": 29.979234,
             "lng": 31.134202
         },
-        "description": "Complexe des pyramides de Gizeh"
+        "description": "Complexe des pyramides de Gizeh",
+        "country": "Égypte"
     },
     {
         "id": 3,
@@ -27,7 +29,8 @@
             "lat": 31.280331,
             "lng": 34.244033
         },
-        "description": "Repas d'iftar dans les décombres à Rafah"
+        "description": "Repas d'iftar dans les décombres à Rafah",
+        "country": "Palestine"
     },
     {
         "id": 4,
@@ -37,7 +40,8 @@
             "lat": 51.505456,
             "lng": -0.075356
         },
-        "description": "Jet de la RAF survolant la Tamise sous le Tower Bridge"
+        "description": "Jet de la RAF survolant la Tamise sous le Tower Bridge",
+        "country": "Royaume-Uni"
     },
     {
         "id": 5,
@@ -47,6 +51,7 @@
             "lat": 19.302861,
             "lng": -99.150528
         },
-        "description": "Célébration de la victoire de l'Argentine au Stade Azteca"
+        "description": "Célébration de la victoire de l'Argentine au Stade Azteca",
+        "country": "Mexique"
     }
 ]
