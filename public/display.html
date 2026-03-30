@@ -15,39 +15,38 @@
 
 <body class="display-mode">
     <div id="game-container">
-        <header>
-            <h1>EraGuesser</h1>
-            <div id="stats">
-                <span id="timer">00</span>s |
+        <div class="stopwatch-container">
+            <span id="timer">00</span>
+        </div>
+
+        <div id="sidebar">
+            <h1 style="text-align:center; transform: rotate(-3deg); color: var(--color-blood-red); text-shadow: 1px 1px rgba(0,0,0,0.2); font-size: 2.8rem; margin-top: 0;">EraGuesser</h1>
+            <h2>Classement</h2>
+            <ul id="leaderboard-list">
+                <!-- Players will be listed here -->
+            </ul>
+            <div id="stats" style="text-align: center; border-top: 2px dashed rgba(0,0,0,0.3); padding-top: 10px; margin-top: 20px; font-weight: bold; font-size: 1.2rem;">
                 Manche <span id="current-round">0</span> / <span id="total-rounds">3</span>
             </div>
-        </header>
+            <div id="qr-code-placeholder" style="margin-top: 20px;">
+                <p style="margin: 0 0 10px 0;">Scannez pour rejoindre</p>
+                <!-- QR Code here -->
+            </div>
+        </div>
 
         <div id="content-area">
             <div id="photo-container">
                 <img id="current-photo" src="" alt="Photo Historique">
                 <div id="loading-message">
                     <h2>En attente de démarrage...</h2>
-                    <p>Appuyez sur "ENTRÉE" ou cliquez ci-dessous pour lancer la partie.</p>
+                    <p>Appuyez sur "ENTRÉE" ou cliquez ci-dessous.</p>
                     <button id="start-btn"
-                        style="padding: 1rem 2rem; font-size: 1.5rem; background: var(--color-electric-aqua); color: var(--color-charcoal); border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem;">Lancer
-                        la partie</button>
+                        style="padding: 1rem 2rem; font-size: 1.5rem; background: var(--color-blood-red); color: white; border: none; font-family: 'Special Elite', monospace; border-radius: 8px; cursor: pointer; margin-top: 1rem; box-shadow: 2px 2px 5px rgba(0,0,0,0.5);">Lancer la partie</button>
                 </div>
             </div>
             <!-- Defines where the result map will be shown (overlaid or replacing photo) -->
             <div id="screen-result" style="display:none; width:100%; height:100%;">
-                <div id="result-map" style="width:100%; height:100%;"></div>
-            </div>
-        </div>
-
-        <div id="sidebar">
-            <h2>Classement</h2>
-            <ul id="leaderboard-list">
-                <!-- Players will be listed here -->
-            </ul>
-            <div id="qr-code-placeholder">
-                <p>Scannez pour rejoindre</p>
-                <!-- QR Code here -->
+                <div id="result-map" style="width:100%; height:100%; border: 15px solid white; box-shadow: 5px 5px 20px rgba(0,0,0,0.5); transform: rotate(-1deg);"></div>
             </div>
         </div>
     </div>
