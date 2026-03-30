@@ -17,31 +17,30 @@
 
     <div id="login-screen">
         <h1>EraGuesser</h1>
-        <p>Entrez votre nom pour jouer</p>
-        <input type="text" id="username" placeholder="Pseudo"
-            style="padding: 1rem; font-size: 1.2rem; margin-bottom: 1rem; width: 80%;">
+        <p>Votre nom pour le dossier</p>
+        <input type="text" id="username" placeholder="Inspecteur..." autocomplete="off">
         <button id="join-btn">Rejoindre</button>
     </div>
 
-    <div id="waiting-room" class="hidden" style="text-align: center; color: white; padding: 2rem;">
-        <h2>Bienvenue !</h2>
-        <p>Regardez le grand écran.</p>
-        <p>La partie va bientôt commencer...</p>
-        <div style="font-size: 4rem; margin-top: 2rem;">⏳</div>
+    <div id="waiting-room" class="hidden">
+        <h2>Dossier Accepté...</h2>
+        <p>Regardez le tableau principal.</p>
+        <p>En attente du début de l'enquête...</p>
+        <div style="font-size: 3rem; margin-top: 1.5rem;">🔍</div>
     </div>
 
     <div id="game-interface" class="hidden">
-        <div id="status-bar">En attente...</div>
+        <div id="status-bar">En attente des indices...</div>
 
         <!-- Map for Location Guess -->
-        <h3>Où est-ce ?</h3>
+        <h3>Où s'est déroulé cet événement ?</h3>
         <div id="map-input"></div>
 
         <!-- Slider for Year Guess -->
-        <h3>Quelle année ? <span id="selected-year">1950</span></h3>
+        <h3>Année estimée : <span id="selected-year" style="color: var(--color-blood-red); font-weight: bold; font-size: 1.2rem;">1950</span></h3>
         <input type="range" id="year-slider" min="1900" max="2024" value="1950" step="1">
 
-        <button id="submit-guess">Valider</button>
+        <button id="submit-guess">Fermer le dossier</button>
     </div>
 
     <script src="js/controller.js"></script>

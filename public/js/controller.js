@@ -25,10 +25,19 @@ function initMap() {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
+    const redPinIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
     map.on('click', (e) => {
         if (hasGuessed) return;
         if (currentMarker) map.removeLayer(currentMarker);
-        currentMarker = L.marker(e.latlng).addTo(map);
+        currentMarker = L.marker(e.latlng, {icon: redPinIcon}).addTo(map);
         currentGuess.lat = e.latlng.lat;
         currentGuess.lng = e.latlng.lng;
     });
