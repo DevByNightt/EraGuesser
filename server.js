@@ -49,10 +49,11 @@ let gameState = {
     phase: 'LOBBY', // LOBBY, ROUND, RESULT, END
     players: {},
     currentRound: 0,
-    totalRounds: gameData.length,
+    totalRounds: Math.min(3, gameData.length),
     currentRoundData: null,
     timer: null,
-    timeLeft: 0
+    timeLeft: 0,
+    activeRoundIndices: []
 };
 
 const ROUND_TIME = 30; // seconds
@@ -122,6 +123,15 @@ function startGame() {
     gameState.players = Object.fromEntries(
         Object.entries(gameState.players).map(([id, p]) => [id, { ...p, score: 0, lastGuess: null }])
     );
+    
+    // Select 3 random unique images
+    let pool = Array.from({length: gameData.length}, (_, i) => i);
+    for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    gameState.activeRoundIndices = pool.slice(0, gameState.totalRounds);
+    
     startRound();
 }
 
@@ -133,8 +143,8 @@ function startRound() {
     }
 
     gameState.phase = 'ROUND';
-    // Pick specific data or random
-    const dataIndex = (gameState.currentRound - 1) % gameData.length;
+    // Pick from the randomized pool
+    const dataIndex = gameState.activeRoundIndices[gameState.currentRound - 1];
     gameState.currentRoundData = gameData[dataIndex];
     gameState.timeLeft = ROUND_TIME;
 
@@ -220,7 +230,7 @@ function endGame() {
     setTimeout(() => {
         gameState.phase = 'LOBBY';
         io.emit('resetLobby');
-    }, 10000);
+    }, 30000); // 30 seconds
 }
 
 // const localtunnel = require('localtunnel'); // Removed in favor of untun

@@ -50,6 +50,10 @@ socket.on('updateState', (state) => {
 });
 
 socket.on('roundStart', (data) => {
+    // Hide QR code to expand leaderboard
+    const qrPlaceholder = document.getElementById('qr-code-placeholder');
+    if (qrPlaceholder) qrPlaceholder.classList.add('hidden');
+
     // Reset view
     clearMap();
     screenResult.style.display = 'none';
@@ -150,6 +154,30 @@ socket.on('roundResult', (data) => {
     }, 100);
 
     document.querySelectorAll('.has-guessed').forEach(el => el.classList.remove('has-guessed'));
+});
+
+socket.on('gameEnd', (playersObj) => {
+    const players = Object.values(playersObj).sort((a,b) => b.score - a.score);
+    const finalBoard = document.getElementById('final-leaderboard');
+    finalBoard.innerHTML = '';
+    
+    players.forEach((p, index) => {
+        let medal = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : ''));
+        finalBoard.innerHTML += `
+            <li style="color: ${p.color};">
+                <span>${medal} #${index + 1} ${p.name}</span>
+                <span>${p.score} pts</span>
+            </li>
+        `;
+    });
+    
+    // Show endgame screen
+    const endgame = document.getElementById('endgame-screen');
+    endgame.classList.remove('hidden');
+});
+
+socket.on('resetLobby', () => {
+    window.location.reload(); // Hard reset directly to a clean UI desk state
 });
 
 // Admin Control
