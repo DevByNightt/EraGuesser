@@ -53,7 +53,18 @@ socket.on('roundStart', (data) => {
     // Reset view
     clearMap();
     screenResult.style.display = 'none';
+    
+    // Photo & Pin Drop Animation
     photoImg.style.display = 'block';
+    const pin = document.querySelector('#photo-wrapper .pin');
+    
+    photoImg.classList.remove('animate-drop');
+    if(pin) pin.classList.remove('animate-stab');
+    
+    void photoImg.offsetWidth; // Reflow
+    
+    photoImg.classList.add('animate-drop');
+    if(pin) pin.classList.add('animate-stab');
 
     // Update Info
     roundDisplay.textContent = data.round;
@@ -82,6 +93,12 @@ socket.on('playerGuessed', (playerId) => {
 socket.on('roundResult', (data) => {
     photoImg.style.display = 'none';
     screenResult.style.display = 'flex';
+
+    // Map Slam Animation
+    const resultMap = document.getElementById('result-map');
+    resultMap.classList.remove('animate-slam');
+    void resultMap.offsetWidth; // Reflow
+    resultMap.classList.add('animate-slam');
 
     setTimeout(() => {
         map.invalidateSize();
