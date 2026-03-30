@@ -109,6 +109,7 @@ socket.on('roundStart', () => {
     setTimeout(() => {
         initMap();
         map.invalidateSize();
+        if (map) map.setView([20, 0], 1); // Auto reset zoom out!
     }, 100);
     unlockInterface();
 });

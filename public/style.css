@@ -241,12 +241,13 @@ body {
 
 /* Controller Layout - Detective Theme */
 .controller-mode {
-    overflow: auto;
+    overflow: hidden; /* Prevent scrolling, flex handles fitting */
     background-color: transparent;
     /* inherits corkboard from body */
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh; /* Fixes mobile browser bottom bar overlap */
 }
 
 #login-screen,
@@ -325,7 +326,7 @@ body {
 #game-interface h3 {
     background: var(--color-paper);
     padding: 5px 10px;
-    margin: 5px 0 10px 0;
+    margin: 5px 0 5px 0;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     transform: rotate(1deg);
     border: 1px solid #ccc;
@@ -333,11 +334,12 @@ body {
 
 #map-input {
     width: 95%;
-    height: 35vh;
+    flex: 1;
+    min-height: 25vh;
     border: 4px solid #8b5a2b;
     /* Brown border */
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     z-index: 1;
 }
 
@@ -346,7 +348,8 @@ body {
     -webkit-appearance: none;
     width: 95%;
     height: 40px;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
     background: #d4a373;
     /* Wood color */
     border: 1px solid #8b5a2b;
