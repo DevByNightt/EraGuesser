@@ -66,9 +66,9 @@ socket.on('roundStart', (data) => {
 socket.on('timerUpdate', (time) => {
     timerDisplay.textContent = time;
     if (time <= 5) {
-        timerDisplay.style.color = '#F96E46';
+        timerDisplay.style.color = 'var(--color-blood-red)';
     } else {
-        timerDisplay.style.color = 'white';
+        timerDisplay.style.color = ''; // Clears inline style to use CSS color
     }
 });
 

@@ -47,7 +47,7 @@ body {
     border-radius: 50%;
     border: 12px solid #111;
     background: var(--color-paper);
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 20;
     transform: rotate(-10deg);
 }
@@ -79,7 +79,8 @@ body {
 #timer {
     font-size: 3rem;
     font-weight: bold;
-    color: var(--color-blood-red);
+    color: var(--color-ink); /* Defaults to dark ink */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 #sidebar {
@@ -87,11 +88,12 @@ body {
     color: var(--color-ink);
     padding: 2rem;
     width: 320px;
+    margin-left: 120px;
     min-height: 60vh;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
     transform: rotate(-2deg);
     position: relative;
-    background-image: linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px);
     background-size: 100% 30px;
 }
 
@@ -105,7 +107,7 @@ body {
     height: 20px;
     background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
     border-radius: 50%;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 #sidebar h2 {
@@ -127,7 +129,7 @@ body {
 
 #leaderboard-list li {
     padding: 0.5rem 0;
-    border-bottom: 1px dotted rgba(0,0,0,0.3);
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: space-between;
     font-weight: bold;
@@ -141,30 +143,56 @@ body {
 
 #content-area {
     position: relative;
-    width: 650px;
-    height: 750px;
-}
-
-#photo-container {
-    background: var(--color-polaroid-border);
-    padding: 20px 20px 90px 20px;
-    box-shadow: 10px 10px 25px rgba(0,0,0,0.5);
-    transform: rotate(2deg);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(2deg);
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+    width: 55vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    height: 100%;
 }
 
-#photo-container::after {
-    content: '';
+#photo-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg-paper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.police-folder {
+    width: 70vh;
+    height: 50vh;
+    background: #e6c280;
+    border: 1px solid #b8860b;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.4);
+    transform: translate(-45%, -45%) rotate(4deg);
+    z-index: 1;
+}
+
+.lined-paper {
+    width: 50vh;
+    height: 65vh;
+    background: #fdf5e6;
+    background-image: repeating-linear-gradient(transparent, transparent 19px, #ccc 20px);
+    border: 1px solid #d2b48c;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    transform: translate(-55%, -50%) rotate(-6deg);
+    z-index: 2;
+}
+
+#photo-wrapper {
+    position: relative;
+    z-index: 5;
+    display: inline-block;
+}
+
+#photo-wrapper .pin {
     position: absolute;
     top: 15px;
     left: 50%;
@@ -173,18 +201,30 @@ body {
     height: 25px;
     background: radial-gradient(circle at 30% 30%, #ff4d4d, #8b0000);
     border-radius: 50%;
-    box-shadow: inset -2px -2px 5px rgba(0,0,0,0.3), 5px 5px 10px rgba(0,0,0,0.4);
+    box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.3), 5px 5px 10px rgba(0, 0, 0, 0.4);
+    z-index: 10;
 }
 
-#photo-container img {
-    max-width: 100%;
-    max-height: 100%;
+#current-photo {
+    height: 65vh;
+    max-width: 90vw;
     object-fit: contain;
-    display: none;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    /* display state is handled by JS */
+    box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.6);
+    border: 15px solid #f9f9f9;
+    border-bottom-width: 65px; /* Postcard effect applied directly around the image bounds! */
+    transform: rotate(2deg);
+    background: white; 
 }
 
 #loading-message {
+    position: absolute; /* Placed over everything */
+    z-index: 10;
+    background: var(--color-paper);
+    padding: 3rem;
+    border: 1px solid #ccc;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.5);
+    transform: rotate(-1deg);
     text-align: center;
     font-size: 1.2rem;
 }
@@ -194,33 +234,51 @@ body {
     text-align: center;
     padding: 10px;
     border: 1px dashed var(--color-ink);
-    background: rgba(0,0,0,0.03);
+    background: rgba(0, 0, 0, 0.03);
 }
 
 /* Controller Layout - Detective Theme */
 .controller-mode {
     overflow: auto;
-    background-color: transparent; /* inherits corkboard from body */
+    background-color: transparent;
+    /* inherits corkboard from body */
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
 
-#login-screen, #waiting-room {
+#login-screen,
+#waiting-room {
     background: var(--color-paper);
     padding: 2rem;
     margin: 2rem;
     border-radius: 2px;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
     text-align: center;
     border: 1px solid #ccc;
     transform: rotate(1deg);
 }
 
-#login-screen h1 { color: var(--color-blood-red); font-size: 2.5rem; text-transform: uppercase; margin-bottom: 0; }
-#login-screen p { font-weight: bold; }
-#waiting-room h2 { color: var(--color-blood-red); border-bottom: 2px dashed #ccc; padding-bottom: 10px; }
-#waiting-room p { font-weight: bold; }
+#login-screen h1 {
+    color: var(--color-blood-red);
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+#login-screen p {
+    font-weight: bold;
+}
+
+#waiting-room h2 {
+    color: var(--color-blood-red);
+    border-bottom: 2px dashed #ccc;
+    padding-bottom: 10px;
+}
+
+#waiting-room p {
+    font-weight: bold;
+}
 
 #username {
     background: transparent;
@@ -235,7 +293,10 @@ body {
     width: 80%;
 }
 
-#username:focus { outline: none; border-bottom: 2px solid var(--color-blood-red); }
+#username:focus {
+    outline: none;
+    border-bottom: 2px solid var(--color-blood-red);
+}
 
 #game-interface {
     flex: 1;
@@ -254,7 +315,7 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     transform: rotate(-2deg);
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     margin-bottom: 1rem;
     letter-spacing: 1px;
 }
@@ -263,7 +324,7 @@ body {
     background: var(--color-paper);
     padding: 5px 10px;
     margin: 5px 0 10px 0;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     transform: rotate(1deg);
     border: 1px solid #ccc;
 }
@@ -271,8 +332,9 @@ body {
 #map-input {
     width: 95%;
     height: 35vh;
-    border: 4px solid #8b5a2b; /* Brown border */
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    border: 4px solid #8b5a2b;
+    /* Brown border */
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
     margin-bottom: 1.5rem;
     z-index: 1;
 }
@@ -283,12 +345,13 @@ body {
     width: 95%;
     height: 40px;
     margin-top: 1rem;
-    background: #d4a373; /* Wood color */
+    background: #d4a373;
+    /* Wood color */
     border: 1px solid #8b5a2b;
     border-radius: 2px;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.2), 3px 3px 5px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2), 3px 3px 5px rgba(0, 0, 0, 0.3);
     /* Tick marks using repeating linear gradient */
-    background-image: 
+    background-image:
         repeating-linear-gradient(to right, #8b5a2b 0, #8b5a2b 2px, transparent 2px, transparent 10%),
         repeating-linear-gradient(to right, #8b5a2b 0, #8b5a2b 1px, transparent 1px, transparent 2%);
     background-size: 100% 20px, 100% 10px;
@@ -306,7 +369,7 @@ body {
     cursor: pointer;
     border: 2px solid white;
     border-radius: 20px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 #year-slider::-moz-range-thumb {
@@ -316,7 +379,7 @@ body {
     cursor: pointer;
     border: 2px solid white;
     border-radius: 20px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 button {

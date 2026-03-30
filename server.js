@@ -49,7 +49,7 @@ let gameState = {
     phase: 'LOBBY', // LOBBY, ROUND, RESULT, END
     players: {},
     currentRound: 0,
-    totalRounds: 3,
+    totalRounds: gameData.length,
     currentRoundData: null,
     timer: null,
     timeLeft: 0
