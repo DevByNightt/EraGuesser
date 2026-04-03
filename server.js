@@ -118,19 +118,27 @@ io.on('connection', (socket) => {
     });
 });
 
+let globalDeck = [];
+
 function startGame() {
     gameState.currentRound = 0;
     gameState.players = Object.fromEntries(
         Object.entries(gameState.players).map(([id, p]) => [id, { ...p, score: 0, lastGuess: null }])
     );
     
-    // Select 3 random unique images
-    let pool = Array.from({length: gameData.length}, (_, i) => i);
-    for (let i = pool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [pool[i], pool[j]] = [pool[j], pool[i]];
+    // Use a "Bag" randomizer (draw without replacement across games)
+    if (globalDeck.length < gameState.totalRounds) {
+        let pool = Array.from({length: gameData.length}, (_, i) => i);
+        // Fisher-Yates shuffle
+        for (let i = pool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
+        globalDeck = globalDeck.concat(pool);
     }
-    gameState.activeRoundIndices = pool.slice(0, gameState.totalRounds);
+    
+    // Draw the next rounds from the bag
+    gameState.activeRoundIndices = globalDeck.splice(0, gameState.totalRounds);
     
     startRound();
 }

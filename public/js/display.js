@@ -50,6 +50,8 @@ socket.on('updateState', (state) => {
 });
 
 socket.on('roundStart', (data) => {
+    document.body.classList.add('game-started');
+
     // Hide QR code to expand leaderboard
     const qrPlaceholder = document.getElementById('qr-code-placeholder');
     if (qrPlaceholder) qrPlaceholder.classList.add('hidden');

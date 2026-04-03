@@ -107,6 +107,7 @@ socket.on('waitInLobby', () => {
 });
 
 socket.on('roundStart', () => {
+    document.body.classList.add('game-started');
     if (waitingRoom) waitingRoom.classList.add('hidden');
     gameInterface.classList.remove('hidden');
     // Initialize map now that it's visible
@@ -120,6 +121,7 @@ socket.on('roundStart', () => {
 });
 
 socket.on('gameAlreadyStarted', () => {
+    document.body.classList.add('game-started');
     statusMsg.innerText = "Partie en cours... Attendez la prochaine manche.";
     if (waitingRoom) waitingRoom.classList.add('hidden');
     gameInterface.classList.remove('hidden');
