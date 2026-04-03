@@ -53,5 +53,27 @@
         },
         "description": "Célébration de la victoire de l'Argentine au Stade Azteca",
         "country": "Mexique"
+    },
+    {
+        "id": 6,
+        "imageUrl": "images/ferey-bures.png",
+        "year": 2022,
+        "location": {
+            "lat": 48.6946,
+            "lng": 2.1643
+        },
+        "description": "5 rue Vincent van Gogh, Bures-sur-Yvette",
+        "country": "France"
+    },
+    {
+        "id": 7,
+        "imageUrl": "images/iut-orsay.png",
+        "year": 2008,
+        "location": {
+            "lat": 48.7154,
+            "lng": 2.1678
+        },
+        "description": "13 Av. des Sciences, Gif-sur-Yvette",
+        "country": "France"
     }
 ]
