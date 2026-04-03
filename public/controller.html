@@ -26,7 +26,8 @@
         <h2>Dossier Accepté...</h2>
         <p>Regardez le tableau principal.</p>
         <p>En attente du début de l'enquête...</p>
-        <div style="font-size: 3rem; margin-top: 1.5rem;">🔍</div>
+        <div style="font-size: 3rem; margin-top: 1.5rem; margin-bottom: 1.5rem;">🔍</div>
+        <button id="lobby-minigame-btn" class="minigame-btn">Jouer pour patienter</button>
     </div>
 
     <div id="game-interface" class="hidden">
@@ -42,6 +43,18 @@
         <input type="range" id="year-slider" min="1900" max="2025" value="1950" step="1">
 
         <button id="submit-guess">Fermer le dossier</button>
+        <button id="post-guess-minigame-btn" class="minigame-btn hidden" style="margin-top: 10px; background-color: #333;">Jouer pour patienter</button>
+    </div>
+
+    <!-- Mini Game Modal -->
+    <div id="minigame-modal" class="hidden">
+        <div class="minigame-container">
+            <h2 style="margin-top: 0; color: var(--color-blood-red); border-bottom: 2px dashed #333; padding-bottom: 5px;">Border Drop</h2>
+            <div id="minigame-score" style="font-weight: bold; margin-bottom: 10px;">Score: <span id="mg-score-val">0</span></div>
+            <canvas id="minigame-canvas" width="300" height="350"></canvas>
+            <p style="font-size: 0.9rem; margin: 10px 0;">Glissez pour déplacer la corbeille</p>
+            <button id="close-minigame-btn" style="background-color: #333; padding: 0.7rem 1.5rem; max-width: none;">Quitter</button>
+        </div>
     </div>
 
     <script src="js/controller.js"></script>

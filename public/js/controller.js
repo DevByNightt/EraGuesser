@@ -77,6 +77,8 @@ function lockInterface() {
     submitBtn.innerText = "Validé";
     yearSlider.disabled = true;
     if (map) map.dragging.disable();
+    const postBtn = document.getElementById('post-guess-minigame-btn');
+    if (postBtn) postBtn.classList.remove('hidden');
 }
 
 function unlockInterface() {
@@ -90,6 +92,8 @@ function unlockInterface() {
         if (currentMarker) map.removeLayer(currentMarker);
         currentMarker = null;
     }
+    const postBtn = document.getElementById('post-guess-minigame-btn');
+    if (postBtn) postBtn.classList.add('hidden');
 }
 
 socket.on('joined', (playerData) => {
@@ -112,6 +116,7 @@ socket.on('roundStart', () => {
         if (map) map.setView([20, 0], 1); // Auto reset zoom out!
     }, 100);
     unlockInterface();
+    closeMiniGame(); // Force close mini-game when round starts
 });
 
 socket.on('gameAlreadyStarted', () => {
@@ -124,3 +129,259 @@ socket.on('gameAlreadyStarted', () => {
         map.invalidateSize();
     }, 100);
 });
+
+// ==========================================
+// Border Drop Mini-Game Logic
+// ==========================================
+const minigameModal = document.getElementById('minigame-modal');
+const mgCanvas = document.getElementById('minigame-canvas');
+let mgCtx = null;
+if (mgCanvas) {
+    mgCtx = mgCanvas.getContext('2d');
+}
+const mgScoreVal = document.getElementById('mg-score-val');
+
+let mgAnimFrame = null;
+let mgScore = 0;
+let mgBasketX = 100;
+const mgBasketWidth = 100;
+const mgBasketHeight = 50;
+let mgBasketContinent = "";
+let mgFallingItems = [];
+let mgIsPlaying = false;
+let mgFrames = 0;
+
+const mgContinents = ["Europe", "Asie", "Afrique", "Amérique", "Océanie"];
+const mgCountries = {
+    "Europe": ["France", "Italie", "Espagne", "Allemagne", "Roumanie"],
+    "Asie": ["Japon", "Chine", "Inde", "Corée", "Vietnam"],
+    "Afrique": ["Egypte", "Kenya", "Maroc", "Sénégal", "Nigeria"],
+    "Amérique": ["Brésil", "Canada", "Mexique", "Pérou", "Argentine"],
+    "Océanie": ["Australie", "Fidji", "Samoa", "Nouvelle-Zélande"]
+};
+
+function openMiniGame() {
+    if (!minigameModal) return;
+    minigameModal.classList.remove('hidden');
+    mgScore = 0;
+    mgScoreVal.innerText = mgScore;
+    mgFallingItems = [];
+    mgFrames = 0;
+    mgBasketX = (mgCanvas.width - mgBasketWidth) / 2;
+    mgBasketContinent = mgContinents[Math.floor(Math.random() * mgContinents.length)];
+    mgIsPlaying = true;
+    mgLoop();
+}
+
+function closeMiniGame() {
+    if (!minigameModal) return;
+    minigameModal.classList.add('hidden');
+    mgIsPlaying = false;
+    if (mgAnimFrame) cancelAnimationFrame(mgAnimFrame);
+}
+
+// Event listeners for open/close
+document.getElementById('lobby-minigame-btn')?.addEventListener('click', openMiniGame);
+document.getElementById('post-guess-minigame-btn')?.addEventListener('click', openMiniGame);
+document.getElementById('close-minigame-btn')?.addEventListener('click', closeMiniGame);
+
+// Controls (Drag Mechanism)
+let isDragging = false;
+let offsetX = 0;
+
+if (mgCanvas) {
+    mgCanvas.addEventListener('touchstart', (e) => {
+        const rect = mgCanvas.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - rect.left;
+        mgBasketX = touchX - mgBasketWidth / 2;
+        mgBasketX = Math.max(0, Math.min(mgCanvas.width - mgBasketWidth, mgBasketX));
+        isDragging = true;
+        offsetX = mgBasketWidth / 2;
+        e.preventDefault();
+    }, {passive: false});
+
+    mgCanvas.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        const rect = mgCanvas.getBoundingClientRect();
+        const touchX = e.touches[0].clientX - rect.left;
+        mgBasketX = touchX - offsetX;
+        mgBasketX = Math.max(0, Math.min(mgCanvas.width - mgBasketWidth, mgBasketX));
+        e.preventDefault();
+    }, {passive: false});
+
+    mgCanvas.addEventListener('touchend', () => isDragging = false);
+
+    // Mouse equivalents
+    mgCanvas.addEventListener('mousedown', (e) => {
+        const rect = mgCanvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        mgBasketX = clickX - mgBasketWidth / 2;
+        mgBasketX = Math.max(0, Math.min(mgCanvas.width - mgBasketWidth, mgBasketX));
+        isDragging = true;
+        offsetX = mgBasketWidth / 2;
+    });
+    mgCanvas.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const rect = mgCanvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        mgBasketX = clickX - offsetX;
+        mgBasketX = Math.max(0, Math.min(mgCanvas.width - mgBasketWidth, mgBasketX));
+    });
+    mgCanvas.addEventListener('mouseup', () => isDragging = false);
+    mgCanvas.addEventListener('mouseleave', () => isDragging = false);
+}
+
+function mgLoop() {
+    if (!mgIsPlaying) return;
+    mgFrames++;
+
+    mgCtx.clearRect(0, 0, mgCanvas.width, mgCanvas.height);
+
+    // Spawn items
+    if (mgFrames % 60 === 0) {
+        // Randomly pick a continent and then a country from it
+        const cont = mgContinents[Math.floor(Math.random() * mgContinents.length)];
+        const countryList = mgCountries[cont];
+        const country = countryList[Math.floor(Math.random() * countryList.length)];
+        mgFallingItems.push({
+            x: Math.random() * (mgCanvas.width - 60) + 10,
+            y: -20,
+            speed: 2 + Math.random() * 2,
+            text: country,
+            continent: cont
+        });
+    }
+
+    // Change basket continent every a few catches/time
+    if (mgFrames % 600 === 0) {
+        mgBasketContinent = mgContinents[Math.floor(Math.random() * mgContinents.length)];
+    }
+
+    // Draw basket (Wire Mesh Trash Can)
+    mgCtx.save();
+    mgCtx.translate(mgBasketX, mgCanvas.height - mgBasketHeight - 10);
+    // Base inner
+    mgCtx.globalCompositeOperation = 'destination-over';
+    mgCtx.fillStyle = '#111';
+    mgCtx.beginPath();
+    mgCtx.ellipse(mgBasketWidth/2, mgBasketHeight, 30, 5, 0, 0, Math.PI * 2);
+    mgCtx.fill();
+    mgCtx.globalCompositeOperation = 'source-over';
+    
+    // Body Mesh
+    mgCtx.strokeStyle = '#444';
+    mgCtx.lineWidth = 1.5;
+    mgCtx.beginPath();
+    mgCtx.moveTo(0, 0); // left rim
+    mgCtx.lineTo(mgBasketWidth/2 - 30, mgBasketHeight); // left base
+    mgCtx.lineTo(mgBasketWidth/2 + 30, mgBasketHeight); // right base
+    mgCtx.lineTo(mgBasketWidth, 0); // right rim
+    mgCtx.fillStyle = 'rgba(0,0,0,0.5)';
+    mgCtx.fill(); // Dark semi-transparent background for bin
+    mgCtx.save();
+    mgCtx.clip();
+    // Grid
+    mgCtx.beginPath();
+    for (let x = -50; x < mgBasketWidth + 50; x += 15) {
+        mgCtx.moveTo(x, -10);
+        mgCtx.lineTo(x + 50, mgBasketHeight + 10);
+        mgCtx.moveTo(x + 50, -10);
+        mgCtx.lineTo(x, mgBasketHeight + 10);
+    }
+    mgCtx.stroke();
+    mgCtx.restore();
+
+    // Rims
+    mgCtx.fillStyle = '#222';
+    mgCtx.beginPath();
+    mgCtx.ellipse(mgBasketWidth/2, 0, mgBasketWidth/2, 6, 0, 0, Math.PI * 2);
+    mgCtx.fill();
+    mgCtx.strokeStyle = '#888';
+    mgCtx.lineWidth = 2;
+    mgCtx.stroke(); // Shiny top rim
+    mgCtx.fillStyle = '#222';
+    mgCtx.beginPath();
+    mgCtx.ellipse(mgBasketWidth/2, mgBasketHeight, 30, 5, 0, 0, Math.PI * 2);
+    mgCtx.fill();
+
+    mgCtx.restore();
+
+    // Text on the bin (like a label sticked to it)
+    mgCtx.fillStyle = '#fdf5e6';
+    mgCtx.fillRect(mgBasketX + mgBasketWidth/2 - 30, mgCanvas.height - mgBasketHeight/2 - 15, 60, 20);
+    mgCtx.fillStyle = '#111';
+    mgCtx.font = '12px "Special Elite", monospace';
+    mgCtx.textAlign = 'center';
+    mgCtx.textBaseline = 'middle';
+    mgCtx.fillText(mgBasketContinent, mgBasketX + mgBasketWidth / 2, mgCanvas.height - mgBasketHeight / 2 - 5);
+
+    // Draw items (Tags with Strings)
+    for (let i = mgFallingItems.length - 1; i >= 0; i--) {
+        let item = mgFallingItems[i];
+        item.y += item.speed;
+
+        mgCtx.font = '14px "Special Elite", monospace';
+        const tWidth = mgCtx.measureText(item.text).width;
+        const tagWidth = tWidth + 20;
+        const tagHeight = 24;
+
+        mgCtx.save();
+        mgCtx.translate(item.x, item.y);
+        
+        // Red string
+        mgCtx.strokeStyle = '#ad1a1a';
+        mgCtx.lineWidth = 1.5;
+        mgCtx.beginPath();
+        mgCtx.moveTo(tagWidth/2, 0);
+        mgCtx.quadraticCurveTo(tagWidth/2 - 15, -15, tagWidth/2 + 10, -25);
+        mgCtx.stroke();
+
+        // Tag Body
+        mgCtx.fillStyle = '#fdf5e6';
+        mgCtx.shadowColor = 'rgba(0,0,0,0.3)';
+        mgCtx.shadowOffsetY = 2;
+        mgCtx.shadowBlur = 3;
+        mgCtx.beginPath();
+        mgCtx.roundRect(0, 0, tagWidth, tagHeight, 3);
+        mgCtx.fill();
+        mgCtx.shadowColor = 'transparent';
+
+        // Hole
+        mgCtx.fillStyle = '#fff';
+        mgCtx.strokeStyle = '#ccc';
+        mgCtx.lineWidth = 1;
+        mgCtx.beginPath();
+        mgCtx.arc(tagWidth/2, 4, 2.5, 0, Math.PI*2);
+        mgCtx.fill();
+        mgCtx.stroke();
+
+        // Text
+        mgCtx.fillStyle = '#2b2b2b';
+        mgCtx.textAlign = 'center';
+        mgCtx.textBaseline = 'middle';
+        mgCtx.fillText(item.text, tagWidth/2, tagHeight/2 + 2);
+
+        mgCtx.restore();
+
+        // Collision logic (approximate tag center)
+        if (item.y + tagHeight > mgCanvas.height - mgBasketHeight - 10 && item.y < mgCanvas.height) {
+            if (item.x + tagWidth/2 > mgBasketX && item.x + tagWidth/2 < mgBasketX + mgBasketWidth) {
+                if (item.continent === mgBasketContinent) {
+                    mgScore++;
+                } else {
+                    mgScore--;
+                }
+                mgScoreVal.innerText = mgScore;
+                mgFallingItems.splice(i, 1);
+                continue;
+            }
+        }
+
+        // Out of bounds
+        if (item.y > mgCanvas.height + 20) {
+            mgFallingItems.splice(i, 1);
+        }
+    }
+
+    mgAnimFrame = requestAnimationFrame(mgLoop);
+}
