@@ -9,7 +9,7 @@ ou svv vs tapez votre mdp à chaque fois
 
 ## Introduction
 **EraGuesser** est un jeu multijoueur interactif pensé pour être joué "en présentiel" (dans une salle de classe, un amphithéâtre ou un salon). 
-Inspiré de jeux comme GeoGuessr ou TimeGuessr, le but est simple : **deviner le lieu et l'année d'une photographie historique**.
+Inspiré de jeux comme GeoGuessr, le but est simple : **deviner le lieu et l'année d'une photographie historique**.
 
 L'originalité d'EraGuesser réside dans son format : 
 - Il y a un **écran principal partagé** (affiché sur un vidéoprojecteur ou un grand écran) que tout le monde regarde.

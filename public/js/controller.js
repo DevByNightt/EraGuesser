@@ -184,6 +184,13 @@ socket.on('roundResult', (data) => {
     }
 });
 
+socket.on('disconnect', () => {
+    const offlineScreen = document.getElementById('server-offline-screen');
+    if (offlineScreen) {
+        offlineScreen.classList.remove('hidden');
+    }
+});
+
 // ==========================================
 // Border Drop Mini-Game Logic
 // ==========================================
@@ -207,11 +214,11 @@ let mgFrames = 0;
 
 const mgContinents = ["Europe", "Asie", "Afrique", "Amérique", "Océanie"];
 const mgCountries = {
-    "Europe": ["France", "Italie", "Espagne", "Allemagne", "Roumanie"],
-    "Asie": ["Japon", "Chine", "Inde", "Corée", "Vietnam"],
-    "Afrique": ["Egypte", "Kenya", "Maroc", "Sénégal", "Nigeria"],
-    "Amérique": ["Brésil", "Canada", "Mexique", "Pérou", "Argentine"],
-    "Océanie": ["Australie", "Fidji", "Samoa", "Nouvelle-Zélande"]
+    "Europe": ["France", "Italie", "Espagne", "Allemagne", "Roumanie", "Royaume-Uni", "Portugal", "Grèce", "Suède", "Suisse", "Belgique", "Pays-Bas", "Pologne"],
+    "Asie": ["Japon", "Chine", "Inde", "Corée du Sud", "Vietnam", "Thaïlande", "Indonésie", "Philippines", "Malaisie", "Pakistan", "Irak", "Iran"],
+    "Afrique": ["Egypte", "Kenya", "Maroc", "Sénégal", "Nigeria", "Afrique du Sud", "Algérie", "Tunisie", "Ethiopie", "Ghana", "Côte d'Ivoire", "Cameroun"],
+    "Amérique": ["Brésil", "Canada", "Mexique", "Pérou", "Argentine", "États-Unis", "Colombie", "Chili", "Cuba", "Venezuela", "Bolivie", "Équateur"],
+    "Océanie": ["Australie", "Fidji", "Samoa", "Nouvelle-Zélande", "Vanuatu", "Tonga", "Tuvalu", "Micronésie", "Kiribati"]
 };
 
 function openMiniGame() {
