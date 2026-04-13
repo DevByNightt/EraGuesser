@@ -191,6 +191,13 @@ socket.on('resetLobby', () => {
     window.location.reload(); // Hard reset directly to a clean UI desk state
 });
 
+socket.on('disconnect', () => {
+    const offlineScreen = document.getElementById('server-offline-screen');
+    if (offlineScreen) {
+        offlineScreen.classList.remove('hidden');
+    }
+});
+
 // Admin Control
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
