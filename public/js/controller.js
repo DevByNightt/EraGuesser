@@ -13,6 +13,7 @@ const yearSlider = document.getElementById('year-slider');
 const yearDisplay = document.getElementById('selected-year');
 const submitBtn = document.getElementById('submit-guess');
 const statusMsg = document.getElementById('status-bar');
+const mobileTimer = document.getElementById('mobile-timer');
 
 // Map Initialization
 let map = null;
@@ -106,10 +107,14 @@ socket.on('waitInLobby', () => {
     gameInterface.classList.add('hidden');
 });
 
-socket.on('roundStart', () => {
+socket.on('roundStart', (data) => {
     document.body.classList.add('game-started');
     if (waitingRoom) waitingRoom.classList.add('hidden');
     gameInterface.classList.remove('hidden');
+    
+    if (mobileTimer && data && data.time) {
+        mobileTimer.innerText = data.time;
+    }
     // Initialize map now that it's visible
     setTimeout(() => {
         initMap();
@@ -130,6 +135,12 @@ socket.on('gameAlreadyStarted', () => {
         initMap();
         map.invalidateSize();
     }, 100);
+});
+
+socket.on('timerUpdate', (timeLeft) => {
+    if (mobileTimer) {
+        mobileTimer.innerText = Math.max(0, timeLeft);
+    }
 });
 
 // ==========================================

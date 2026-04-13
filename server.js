@@ -170,7 +170,7 @@ function startRound() {
 
     gameState.timer = setInterval(() => {
         gameState.timeLeft--;
-        io.to('display').emit('timerUpdate', gameState.timeLeft);
+        io.emit('timerUpdate', gameState.timeLeft);
         if (gameState.timeLeft <= 0) {
             endRound();
         }
