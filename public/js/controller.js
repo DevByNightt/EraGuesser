@@ -123,6 +123,8 @@ socket.on('roundStart', (data) => {
     }, 100);
     unlockInterface();
     closeMiniGame(); // Force close mini-game when round starts
+    const personalResults = document.getElementById('personal-results');
+    if (personalResults) personalResults.classList.add('hidden');
 });
 
 socket.on('gameAlreadyStarted', () => {
@@ -140,6 +142,45 @@ socket.on('gameAlreadyStarted', () => {
 socket.on('timerUpdate', (timeLeft) => {
     if (mobileTimer) {
         mobileTimer.innerText = Math.max(0, timeLeft);
+    }
+});
+
+socket.on('roundResult', (data) => {
+    closeMiniGame(); // Ensure minigame is closed when results appear
+    const myResult = data.playerResults.find(p => p.id === myId);
+    if (myResult && myResult.guess) {
+        const personalResults = document.getElementById('personal-results');
+        const resDist = document.getElementById('res-distance');
+        const resYear = document.getElementById('res-year');
+        const resPoints = document.getElementById('res-points');
+        
+        if (resDist) resDist.innerText = myResult.distance;
+        if (resYear) {
+            const myYear = myResult.guess.year;
+            const diff = myYear - data.correctYear;
+            
+            if (diff === 0) {
+                resYear.innerHTML = `${myYear}<br><span style="font-size: 1rem; color: #000; font-weight: normal;">(Année exacte !)</span>`;
+            } else if (diff > 0) {
+                resYear.innerHTML = `${myYear}<br><span style="font-size: 1rem; color: #000; font-weight: normal;">(${diff} an${diff > 1 ? 's' : ''} trop tard)</span>`;
+            } else {
+                resYear.innerHTML = `${myYear}<br><span style="font-size: 1rem; color: #000; font-weight: normal;">(${Math.abs(diff)} an${Math.abs(diff) > 1 ? 's' : ''} trop tôt)</span>`;
+            }
+        }
+        if (resPoints) resPoints.innerText = `+${myResult.roundScore}`;
+        
+        if (personalResults) personalResults.classList.remove('hidden');
+        gameInterface.classList.add('hidden');
+    } else if (myResult && !myResult.guess) {
+        // Player missed their guess
+        const personalResults = document.getElementById('personal-results');
+        const resPoints = document.getElementById('res-points');
+        
+        document.getElementById('res-distance').innerText = "-";
+        document.getElementById('res-year').innerText = "-";
+        if (resPoints) resPoints.innerText = "+0";
+        if (personalResults) personalResults.classList.remove('hidden');
+        gameInterface.classList.add('hidden');
     }
 });
 
