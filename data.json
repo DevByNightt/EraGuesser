@@ -55,7 +55,7 @@
         "country": "Mexique"
     },
     {
-        "id": 7,
+        "id": 6,
         "imageUrl": "images/iut-orsay.png",
         "year": 2008,
         "location": {
@@ -66,7 +66,7 @@
         "country": "France"
     },
     {
-        "id": 8,
+        "id": 7,
         "imageUrl": "images/kaaba-1910.jpg",
         "year": 1910,
         "location": {
@@ -77,7 +77,7 @@
         "country": "Arabie Saoudite"
     },
     {
-        "id": 9,
+        "id": 8,
         "imageUrl": "images/mombasa-kenya-2006.jpg",
         "year": 2006,
         "location": {
@@ -88,7 +88,7 @@
         "country": "Kenya"
     },
     {
-        "id": 10,
+        "id": 9,
         "imageUrl": "images/oval-office-1963.jpg",
         "year": 1963,
         "location": {
@@ -99,7 +99,7 @@
         "country": "États-Unis"
     },
     {
-        "id": 11,
+        "id": 10,
         "imageUrl": "images/sarajevo-1914.jpg",
         "year": 1914,
         "location": {
@@ -110,7 +110,7 @@
         "country": "Bosnie-Herzégovine"
     },
     {
-        "id": 12,
+        "id": 11,
         "imageUrl": "images/veneuela-party-covid-2020.jpg",
         "year": 2020,
         "location": {
@@ -121,7 +121,7 @@
         "country": "Venezuela"
     },
     {
-        "id": 13,
+        "id": 12,
         "imageUrl": "images/western-front-1918.jpg",
         "year": 1918,
         "location": {
@@ -132,7 +132,7 @@
         "country": "France"
     },
     {
-        "id": 14,
+        "id": 13,
         "imageUrl": "images/christ-the-redeemer-construction-1926.jpg",
         "year": 1926,
         "location": {
@@ -143,7 +143,7 @@
         "country": "Brésil"
     },
     {
-        "id": 15,
+        "id": 14,
         "imageUrl": "images/dubai-1990.jpg",
         "year": 1990,
         "location": {
@@ -154,7 +154,7 @@
         "country": "Émirats arabes unis"
     },
     {
-        "id": 16,
+        "id": 15,
         "imageUrl": "images/hollywood-sign-1978.jpg",
         "year": 1978,
         "location": {
@@ -165,7 +165,7 @@
         "country": "États-Unis"
     },
     {
-        "id": 17,
+        "id": 16,
         "imageUrl": "images/mosque-djenné-1907.jpg",
         "year": 1907,
         "location": {
@@ -176,7 +176,7 @@
         "country": "Mali"
     },
     {
-        "id": 18,
+        "id": 17,
         "imageUrl": "images/nagasaki-1945.jpg",
         "year": 1945,
         "location": {
@@ -187,7 +187,7 @@
         "country": "Japon"
     },
     {
-        "id": 19,
+        "id": 18,
         "imageUrl": "images/olympics-black-power-salute-1968.jpg",
         "year": 1968,
         "location": {
@@ -198,7 +198,7 @@
         "country": "Mexique"
     },
     {
-        "id": 20,
+        "id": 19,
         "imageUrl": "images/tiananmen-protest-1989.jpg",
         "year": 1989,
         "location": {
@@ -209,7 +209,7 @@
         "country": "Chine"
     },
     {
-        "id": 21,
+        "id": 20,
         "imageUrl": "images/wright-first-flight-1903.jpg",
         "year": 1903,
         "location": {
