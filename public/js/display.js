@@ -21,19 +21,30 @@ let correctMarker = null;
 
 socket.emit('identify', 'display');
 
-// Events
-socket.on('connect', () => {
-    console.log("Connected to server");
+function fetchAndDisplayQR() {
     fetch('/qrcode')
         .then(res => res.json())
         .then(data => {
             const container = document.getElementById('qr-code-placeholder');
-            container.innerHTML = `
-                <p>Scannez pour rejoindre</p>
-                <img src="${data.qr}" style="width: 150px; border-radius: 8px;">
-                <p style="font-size: 0.8rem; word-break: break-all;">${data.url}</p>
-            `;
+            if (container) {
+                container.innerHTML = `
+                    <p>Scannez pour rejoindre</p>
+                    <img src="${data.qr}" style="width: 150px; border-radius: 8px;">
+                    <p style="font-size: 0.8rem; word-break: break-all;">${data.url}</p>
+                `;
+            }
         });
+}
+
+// Events
+socket.on('connect', () => {
+    console.log("Connected to server");
+    fetchAndDisplayQR();
+});
+
+socket.on('tunnelReady', () => {
+    console.log("Tunnel ready, refreshing QR Code");
+    fetchAndDisplayQR();
 });
 
 socket.on('playerJoined', (player) => {

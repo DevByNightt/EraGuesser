@@ -258,6 +258,7 @@ server.listen(PORT, async () => {
         if (tunnel) {
             publicUrl = await tunnel.getURL();
             console.log(`Public URL: ${publicUrl}`);
+            io.emit('tunnelReady');
         }
     } catch (err) {
         console.error('Error creating tunnel:', err);
