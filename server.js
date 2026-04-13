@@ -247,7 +247,7 @@ function endGame() {
 const PORT = 3000;
 let publicUrl = null;
 
-server.listen(PORT, '0.0.0.0', async () => {
+server.listen(PORT, async () => {
     console.log(`Server running on port ${PORT}`);
 
     try {
