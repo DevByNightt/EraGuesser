@@ -22,8 +22,8 @@ let currentMarker = null;
 function initMap() {
     if (map) return;
     map = L.map('map-input').setView([20, 0], 1);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
+    L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap France contributors'
     }).addTo(map);
 
     const redPinIcon = L.icon({
@@ -38,7 +38,7 @@ function initMap() {
     map.on('click', (e) => {
         if (hasGuessed) return;
         if (currentMarker) map.removeLayer(currentMarker);
-        currentMarker = L.marker(e.latlng, {icon: redPinIcon}).addTo(map);
+        currentMarker = L.marker(e.latlng, { icon: redPinIcon }).addTo(map);
         currentGuess.lat = e.latlng.lat;
         currentGuess.lng = e.latlng.lng;
     });
@@ -111,7 +111,7 @@ socket.on('roundStart', (data) => {
     document.body.classList.add('game-started');
     if (waitingRoom) waitingRoom.classList.add('hidden');
     gameInterface.classList.remove('hidden');
-    
+
     if (mobileTimer && data && data.time) {
         mobileTimer.innerText = data.time;
     }
@@ -211,7 +211,7 @@ if (mgCanvas) {
         isDragging = true;
         offsetX = mgBasketWidth / 2;
         e.preventDefault();
-    }, {passive: false});
+    }, { passive: false });
 
     mgCanvas.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
@@ -220,7 +220,7 @@ if (mgCanvas) {
         mgBasketX = touchX - offsetX;
         mgBasketX = Math.max(0, Math.min(mgCanvas.width - mgBasketWidth, mgBasketX));
         e.preventDefault();
-    }, {passive: false});
+    }, { passive: false });
 
     mgCanvas.addEventListener('touchend', () => isDragging = false);
 
@@ -277,17 +277,17 @@ function mgLoop() {
     mgCtx.globalCompositeOperation = 'destination-over';
     mgCtx.fillStyle = '#111';
     mgCtx.beginPath();
-    mgCtx.ellipse(mgBasketWidth/2, mgBasketHeight, 30, 5, 0, 0, Math.PI * 2);
+    mgCtx.ellipse(mgBasketWidth / 2, mgBasketHeight, 30, 5, 0, 0, Math.PI * 2);
     mgCtx.fill();
     mgCtx.globalCompositeOperation = 'source-over';
-    
+
     // Body Mesh
     mgCtx.strokeStyle = '#444';
     mgCtx.lineWidth = 1.5;
     mgCtx.beginPath();
     mgCtx.moveTo(0, 0); // left rim
-    mgCtx.lineTo(mgBasketWidth/2 - 30, mgBasketHeight); // left base
-    mgCtx.lineTo(mgBasketWidth/2 + 30, mgBasketHeight); // right base
+    mgCtx.lineTo(mgBasketWidth / 2 - 30, mgBasketHeight); // left base
+    mgCtx.lineTo(mgBasketWidth / 2 + 30, mgBasketHeight); // right base
     mgCtx.lineTo(mgBasketWidth, 0); // right rim
     mgCtx.fillStyle = 'rgba(0,0,0,0.5)';
     mgCtx.fill(); // Dark semi-transparent background for bin
@@ -307,21 +307,21 @@ function mgLoop() {
     // Rims
     mgCtx.fillStyle = '#222';
     mgCtx.beginPath();
-    mgCtx.ellipse(mgBasketWidth/2, 0, mgBasketWidth/2, 6, 0, 0, Math.PI * 2);
+    mgCtx.ellipse(mgBasketWidth / 2, 0, mgBasketWidth / 2, 6, 0, 0, Math.PI * 2);
     mgCtx.fill();
     mgCtx.strokeStyle = '#888';
     mgCtx.lineWidth = 2;
     mgCtx.stroke(); // Shiny top rim
     mgCtx.fillStyle = '#222';
     mgCtx.beginPath();
-    mgCtx.ellipse(mgBasketWidth/2, mgBasketHeight, 30, 5, 0, 0, Math.PI * 2);
+    mgCtx.ellipse(mgBasketWidth / 2, mgBasketHeight, 30, 5, 0, 0, Math.PI * 2);
     mgCtx.fill();
 
     mgCtx.restore();
 
     // Text on the bin (like a label sticked to it)
     mgCtx.fillStyle = '#fdf5e6';
-    mgCtx.fillRect(mgBasketX + mgBasketWidth/2 - 30, mgCanvas.height - mgBasketHeight/2 - 15, 60, 20);
+    mgCtx.fillRect(mgBasketX + mgBasketWidth / 2 - 30, mgCanvas.height - mgBasketHeight / 2 - 15, 60, 20);
     mgCtx.fillStyle = '#111';
     mgCtx.font = '12px "Special Elite", monospace';
     mgCtx.textAlign = 'center';
@@ -340,13 +340,13 @@ function mgLoop() {
 
         mgCtx.save();
         mgCtx.translate(item.x, item.y);
-        
+
         // Red string
         mgCtx.strokeStyle = '#ad1a1a';
         mgCtx.lineWidth = 1.5;
         mgCtx.beginPath();
-        mgCtx.moveTo(tagWidth/2, 0);
-        mgCtx.quadraticCurveTo(tagWidth/2 - 15, -15, tagWidth/2 + 10, -25);
+        mgCtx.moveTo(tagWidth / 2, 0);
+        mgCtx.quadraticCurveTo(tagWidth / 2 - 15, -15, tagWidth / 2 + 10, -25);
         mgCtx.stroke();
 
         // Tag Body
@@ -364,7 +364,7 @@ function mgLoop() {
         mgCtx.strokeStyle = '#ccc';
         mgCtx.lineWidth = 1;
         mgCtx.beginPath();
-        mgCtx.arc(tagWidth/2, 4, 2.5, 0, Math.PI*2);
+        mgCtx.arc(tagWidth / 2, 4, 2.5, 0, Math.PI * 2);
         mgCtx.fill();
         mgCtx.stroke();
 
@@ -372,13 +372,13 @@ function mgLoop() {
         mgCtx.fillStyle = '#2b2b2b';
         mgCtx.textAlign = 'center';
         mgCtx.textBaseline = 'middle';
-        mgCtx.fillText(item.text, tagWidth/2, tagHeight/2 + 2);
+        mgCtx.fillText(item.text, tagWidth / 2, tagHeight / 2 + 2);
 
         mgCtx.restore();
 
         // Collision logic (approximate tag center)
         if (item.y + tagHeight > mgCanvas.height - mgBasketHeight - 10 && item.y < mgCanvas.height) {
-            if (item.x + tagWidth/2 > mgBasketX && item.x + tagWidth/2 < mgBasketX + mgBasketWidth) {
+            if (item.x + tagWidth / 2 > mgBasketX && item.x + tagWidth / 2 < mgBasketX + mgBasketWidth) {
                 if (item.continent === mgBasketContinent) {
                     mgScore++;
                 } else {

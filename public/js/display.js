@@ -12,8 +12,8 @@ const leaderboardList = document.getElementById('leaderboard-list');
 
 // Map
 let map = L.map('result-map').setView([20, 0], 2);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap France contributors'
 }).addTo(map);
 
 let markers = [];
