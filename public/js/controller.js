@@ -155,7 +155,7 @@ socket.on('roundResult', (data) => {
         const resYear = document.getElementById('res-year');
         const resPoints = document.getElementById('res-points');
         
-        if (resDist) resDist.innerText = myResult.distance;
+        if (resDist) resDist.innerText = myResult.distance + ' km';
         if (resYear) {
             const myYear = myResult.guess.year;
             const diff = myYear - data.correctYear;

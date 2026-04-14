@@ -61,25 +61,24 @@
     <!-- Personal Results Screen -->
     <div id="personal-results" class="hidden">
         <div
-            style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 80vh; padding: 20px; box-sizing: border-box; text-align: center;">
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 30px; box-sizing: border-box; text-align: center; background: rgba(245, 245, 240, 0.95); box-shadow: 0px 4px 15px rgba(0,0,0,0.5); border: 1px solid #ccc; max-width: 90%; margin: 20px auto; border-radius: 5px;">
             <h2
-                style="color: var(--color-blood-red); font-family: 'Special Elite', monospace; font-size: 2.2rem; margin-bottom: 30px; letter-spacing: 2px;">
+                style="color: var(--color-blood-red); font-family: 'Special Elite', monospace; font-size: 2.5rem; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; text-decoration: underline;">
                 RAPPORT</h2>
             <div
-                style="background: rgba(0,0,0,0.2); border: 2px solid #333; border-radius: 12px; padding: 30px; width: 100%; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);">
-                <p style="font-size: 1.2rem; margin-bottom: 15px; color: #ccc;"><strong>DISTANCE</strong><br><span
-                        id="res-distance" style="font-size: 1.8rem; color: #fff;"></span> km</p>
-                <div style="border-top: 1px dashed #555; margin: 15px 0;"></div>
-                <p style="font-size: 1.2rem; margin-bottom: 15px; color: #ccc;"><strong>ANNÉE</strong><br><span
-                        id="res-year" style="font-size: 1.8rem; color: #fff;"></span></p>
-                <div style="border-top: 1px dashed #555; margin: 15px 0;"></div>
-                <p style="font-size: 1.2rem; margin-bottom: 0; color: #ccc;"><strong>SCORE OBTENU</strong><br><span
-                        id="res-points"
-                        style="font-weight:bold; font-size: 2.5rem; display:block; margin-top:10px; color: #fff; text-shadow: 0 0 10px rgba(173, 26, 26, 0.4);"></span>
-                </p>
+                style="width: 100%; padding: 20px 0; border-top: 2px dashed #333; border-bottom: 2px dashed #333; margin-bottom: 20px;">
+                <p style="font-size: 1.2rem; margin-bottom: 5px; color: #555; font-weight: bold;">DISTANCE</p>
+                <div id="res-distance" style="font-size: 2rem; color: #111; font-weight: bold; margin-bottom: 15px;"></div>
+                
+                <p style="font-size: 1.2rem; margin-bottom: 5px; color: #555; font-weight: bold;">ANNÉE</p>
+                <div id="res-year" style="font-size: 2rem; color: #111; font-weight: bold; margin-bottom: 15px;"></div>
+                
+                <p style="font-size: 1.2rem; margin-bottom: 5px; color: #555; font-weight: bold;">SCORE OBTENU</p>
+                <div id="res-points"
+                    style="font-weight:bold; font-size: 2.8rem; color: var(--color-blood-red); margin-top: 5px;"></div>
             </div>
             <p id="res-status-msg"
-                style="margin-top: 40px; font-family: 'Special Elite', monospace; color: #000; font-size: 1.1rem; line-height: 1.5;">
+                style="font-family: 'Special Elite', monospace; color: #111; font-size: 1.2rem; line-height: 1.5; font-weight: bold;">
                 Analyse terminée.<br>Regardez le tableau principal pour le classement.</p>
         </div>
     </div>
