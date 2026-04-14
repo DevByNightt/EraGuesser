@@ -267,13 +267,13 @@ server.listen(PORT, async () => {
 
 app.get('/qrcode', async (req, res) => {
     try {
-        // Use public URL if available, otherwise fallback to local IP
-        const baseUrl = publicUrl || `http://${localIp}:${PORT}`;
-        const url = `${baseUrl}/controller.html`;
+        if (!publicUrl) {
+            return res.json({ ready: false });
+        }
+        const url = `${publicUrl}/controller.html`;
         const qr = await QRCode.toDataURL(url);
 
-        // Tunnel password not needed for Cloudflare
-        res.json({ qr, url });
+        res.json({ ready: true, qr, url });
     } catch (err) {
         res.status(500).send('Error generating QR code');
     }

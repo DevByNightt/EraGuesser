@@ -27,11 +27,17 @@ function fetchAndDisplayQR() {
         .then(data => {
             const container = document.getElementById('qr-code-placeholder');
             if (container) {
-                container.innerHTML = `
-                    <p style="margin: 0 0 5px 0; font-size: 0.9rem; font-weight: bold;">Scannez pour rejoindre</p>
-                    <img src="${data.qr}" style="width: 110px; border-radius: 8px;">
-                    <p style="font-size: 0.65rem; word-break: break-all; margin: 5px 0 0 0;">${data.url}</p>
-                `;
+                if (!data.ready) {
+                    container.innerHTML = `
+                        <p style="margin: 0; font-size: 0.9rem; font-style: italic; opacity: 0.7;">Génération du lien sécurisé...<br>Veuillez patienter.</p>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <p style="margin: 0 0 5px 0; font-size: 0.9rem; font-weight: bold;">Scannez pour rejoindre</p>
+                        <img src="${data.qr}" style="width: 110px; border-radius: 8px;">
+                        <p style="font-size: 0.65rem; word-break: break-all; margin: 5px 0 0 0;">${data.url}</p>
+                    `;
+                }
             }
         });
 }
