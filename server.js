@@ -56,7 +56,7 @@ let gameState = {
     activeRoundIndices: []
 };
 
-const ROUND_TIME = 30; // seconds
+const ROUND_TIME = 45; // seconds
 
 io.on('connection', (socket) => {
     // Identify client type

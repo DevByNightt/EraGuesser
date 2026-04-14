@@ -14,10 +14,16 @@
 </head>
 
 <body class="display-mode">
-    <div id="server-offline-screen" class="hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('images/grey-mystery-wall-background.jpg') center/cover no-repeat; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;">
-        <div style="background: rgba(0, 0, 0, 0.7); padding: 50px; border-radius: 15px; border: 2px dashed rgba(255,255,255,0.2); box-shadow: inset 0 0 20px rgba(0,0,0,1);">
-            <h1 style="color: #ad1a1a; font-family: 'Special Elite', monospace; font-size: 4rem; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">SERVEUR HORS LIGNE</h1>
-            <p style="font-size: 1.5rem; font-family: 'Special Elite', monospace; text-shadow: 1px 1px 5px rgba(0,0,0,0.8);">La partie est terminée car la connexion a été interrompue.</p>
+    <div id="server-offline-screen" class="hidden"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('images/grey-mystery-wall-background.jpg') center/cover no-repeat; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;">
+        <div
+            style="background: rgba(0, 0, 0, 0.7); padding: 50px; border-radius: 15px; border: 2px dashed rgba(255,255,255,0.2); box-shadow: inset 0 0 20px rgba(0,0,0,1);">
+            <h1
+                style="color: #ad1a1a; font-family: 'Special Elite', monospace; font-size: 4rem; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">
+                SERVEUR HORS LIGNE</h1>
+            <p
+                style="font-size: 1.5rem; font-family: 'Special Elite', monospace; text-shadow: 1px 1px 5px rgba(0,0,0,0.8);">
+                La partie est terminée car la connexion a été interrompue.</p>
             <p style="margin-top: 30px; font-size: 1.2rem; opacity: 0.8;">Merci d'avoir joué à EraGuesser !</p>
         </div>
     </div>
@@ -28,9 +34,9 @@
 
         <div id="sidebar">
             <h1
-                style="text-align:center; transform: rotate(-3deg); color: var(--color-blood-red); text-shadow: 1px 1px rgba(0,0,0,0.2); font-size: 2.8rem; margin-top: 0;">
+                style="text-align:center; transform: rotate(-3deg); color: var(--color-blood-red); text-shadow: 1px 1px rgba(0,0,0,0.2); font-size: 2.4rem; margin-top: 0;">
                 EraGuesser</h1>
-            <h2>Classement</h2>
+            <h2>Classement (<span id="player-count">0</span>)</h2>
             <ul id="leaderboard-list">
                 <!-- Players will be listed here -->
             </ul>
@@ -48,7 +54,7 @@
             <div id="photo-container">
                 <div class="bg-paper police-folder"></div>
                 <div class="bg-paper lined-paper"></div>
-                
+
                 <div id="photo-wrapper">
                     <div class="pin"></div>
                     <img id="current-photo" src="" alt="Photo Historique">
@@ -63,11 +69,12 @@
                 </div>
             </div>
             <!-- Defines where the result map will be shown (overlaid or replacing photo) -->
-            <div id="screen-result" style="display:none; position: absolute; width:100%; height:100%; padding: 2rem; box-sizing: border-box; z-index: 100;">
+            <div id="screen-result"
+                style="display:none; position: absolute; width:100%; height:100%; padding: 2rem; box-sizing: border-box; z-index: 100;">
                 <div id="result-map"
                     style="width:100%; height:100%; border: 15px solid white; box-shadow: 5px 5px 20px rgba(0,0,0,0.5); transform: rotate(-1deg);">
                 </div>
-                
+
                 <!-- Educational Context Memo -->
                 <div id="context-card">
                     <h2 id="context-year"></h2>
@@ -75,7 +82,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Endgame Screen: Open Folder -->
         <div id="endgame-screen" class="hidden">
             <div class="open-folder-container">
@@ -83,14 +90,47 @@
                     <div class="stamp-affaire">AFFAIRE<br>CLASSÉE</div>
                 </div>
                 <div class="folder-page folder-right">
-                    <h2 style="text-align:center; color: var(--color-blood-red); text-transform:uppercase; border-bottom: 2px dashed var(--color-ink); padding-bottom: 15px; font-size:2.5rem; margin-top:0;">RAPPORT FINAL</h2>
+                    <h2
+                        style="text-align:center; color: var(--color-blood-red); text-transform:uppercase; border-bottom: 2px dashed var(--color-ink); padding-bottom: 15px; font-size:2.5rem; margin-top:0;">
+                        RAPPORT FINAL</h2>
                     <ul id="final-leaderboard">
                         <!-- populated by JS -->
                     </ul>
                 </div>
             </div>
         </div>
-        
+
+        <!-- Rules Screen: Open Folder -->
+        <div id="rules-screen" class="hidden"
+            style="position: absolute; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); z-index:2000; display:flex; justify-content:center; align-items:center;">
+            <div class="open-folder-container">
+                <div class="folder-page folder-left">
+                    <div class="stamp-affaire" style="font-size: 3rem;">TOP SECRET</div>
+                    <h1
+                        style="color: var(--color-ink); font-size: 3.5rem; text-align: center; margin-top: 2rem; font-family: 'Special Elite', monospace;">
+                        RÈGLES DU JEU</h1>
+                </div>
+                <div class="folder-page folder-right"
+                    style="padding: 2rem; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <div style="margin-bottom: 2rem;">
+                        <p style="font-size: 1.8rem; font-weight: bold; line-height: 1.4;">
+                            1- Vous avez 45 secondes pour choisir l'année et la location de la photo sur l'écran
+                        </p>
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <img src="images/iphone.png" alt="iPhone Vertical"
+                            style="height: 150px; width: auto; mix-blend-mode: multiply;">
+                        <p style="font-size: 1.8rem; font-weight: bold; margin-top: 10px; text-transform: uppercase;">
+                            Verticale</p>
+                    </div>
+                    <p
+                        style="color: var(--color-blood-red); font-weight: bold; font-size: 1.2rem; border: 2px dashed var(--color-blood-red); padding: 10px; width: 100%;">
+                        Appuyez sur "ENTRÉE" pour lancer l'opération...
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
     <script src="js/display.js"></script>
 </body>

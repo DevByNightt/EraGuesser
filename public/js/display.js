@@ -28,9 +28,9 @@ function fetchAndDisplayQR() {
             const container = document.getElementById('qr-code-placeholder');
             if (container) {
                 container.innerHTML = `
-                    <p>Scannez pour rejoindre</p>
-                    <img src="${data.qr}" style="width: 150px; border-radius: 8px;">
-                    <p style="font-size: 0.8rem; word-break: break-all;">${data.url}</p>
+                    <p style="margin: 0 0 5px 0; font-size: 0.9rem; font-weight: bold;">Scannez pour rejoindre</p>
+                    <img src="${data.qr}" style="width: 110px; border-radius: 8px;">
+                    <p style="font-size: 0.65rem; word-break: break-all; margin: 5px 0 0 0;">${data.url}</p>
                 `;
             }
         });
@@ -55,8 +55,9 @@ socket.on('playerUpdated', (player) => {
 });
 
 socket.on('updateState', (state) => {
-    if (state.phase === 'LOBBY') {
-        Object.values(state.players).forEach(updateLeaderboard);
+    Object.values(state.players).forEach(updateLeaderboard);
+    if (state.phase !== 'LOBBY') {
+        sortLeaderboardByScore();
     }
 });
 
@@ -169,6 +170,7 @@ socket.on('roundResult', (data) => {
             }
             updateLeaderboard({ id: res.id, name: res.name, score: res.totalScore, color: res.color });
         });
+        sortLeaderboardByScore();
 
         const group = new L.featureGroup([correctMarker, ...markers]);
         map.fitBounds(group.getBounds().pad(0.1));
@@ -209,18 +211,61 @@ socket.on('disconnect', () => {
     }
 });
 
+socket.on('playerLeft', (playerId) => {
+    const li = document.getElementById(`player-${playerId}`);
+    if (li) {
+        li.remove();
+        const countSpan = document.getElementById('player-count');
+        const list = document.getElementById('leaderboard-list');
+        if (countSpan && list) {
+            countSpan.textContent = list.children.length;
+        }
+    }
+});
+
+let showingRules = false;
+
 // Admin Control
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-        socket.emit('startGame');
+        const loadingMessage = document.getElementById('loading-message');
+        const isActive = loadingMessage && loadingMessage.style.display !== 'none';
+        
+        if (isActive && !showingRules) {
+            showRulesScreen();
+        } else if (showingRules) {
+            hideRulesAndStart();
+        }
     }
 });
 
 const startBtn = document.getElementById('start-btn');
 if (startBtn) {
     startBtn.addEventListener('click', () => {
-        socket.emit('startGame');
+        const loadingMessage = document.getElementById('loading-message');
+        const isActive = loadingMessage && loadingMessage.style.display !== 'none';
+        
+        if (isActive && !showingRules) {
+            showRulesScreen();
+        }
     });
+}
+
+function showRulesScreen() {
+    const rulesScreen = document.getElementById('rules-screen');
+    if (rulesScreen && rulesScreen.classList.contains('hidden')) {
+        rulesScreen.classList.remove('hidden');
+        showingRules = true;
+    }
+}
+
+function hideRulesAndStart() {
+    const rulesScreen = document.getElementById('rules-screen');
+    if (rulesScreen && !rulesScreen.classList.contains('hidden')) {
+        rulesScreen.classList.add('hidden');
+        showingRules = false;
+        socket.emit('startGame');
+    }
 }
 
 function updateLeaderboard(player) {
@@ -230,18 +275,38 @@ function updateLeaderboard(player) {
     if (!li) {
         li = document.createElement('li');
         li.id = `player-${player.id}`;
-        list.appendChild(li);
+        list.prepend(li); // Prepend instead of appendChild
     }
 
     li.style.borderLeft = `5px solid ${player.color}`;
+    li.dataset.score = player.score;
     li.innerHTML = `
         <span class="p-name">${player.name}</span>
         <span class="p-score">${player.score} pts</span>
     `;
+    
+    const countSpan = document.getElementById('player-count');
+    if (countSpan) {
+        countSpan.textContent = list.children.length;
+    }
 }
 
 function clearMap() {
     if (correctMarker) map.removeLayer(correctMarker);
     markers.forEach(m => map.removeLayer(m));
     markers = [];
+}
+
+function sortLeaderboardByScore() {
+    const list = document.getElementById('leaderboard-list');
+    const items = Array.from(list.children);
+    
+    items.sort((a, b) => {
+        const scoreA = parseInt(a.dataset.score || '0');
+        const scoreB = parseInt(b.dataset.score || '0');
+        return scoreB - scoreA; // Descending
+    });
+
+    list.innerHTML = '';
+    items.forEach(li => list.appendChild(li));
 }

@@ -46,8 +46,9 @@ function initMap() {
 
 // Login Logic
 joinBtn.addEventListener('click', () => {
-    const name = usernameInput.value;
+    let name = usernameInput.value.trim();
     if (name) {
+        if (name.length > 20) name = name.substring(0, 20);
         socket.emit('identify', { type: 'controller', name: name });
         loginScreen.classList.add('hidden');
         // Wait for server to say 'waitInLobby' or 'roundStart'
