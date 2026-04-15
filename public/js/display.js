@@ -19,6 +19,39 @@ L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
 let markers = [];
 let correctMarker = null;
 
+// --- Audio System ---
+const sfxCamera = new Audio('audio/camera-flash.mp3');
+const sfxTypewriter = new Audio('audio/typewriter-type-and-ding.mp3');
+const sfxPaper1 = new Audio('audio/paper1.mp3'); // End game results
+const sfxPaper2 = new Audio('audio/paper2.mp3'); // Tutorial screen
+
+const bgAudio = new Audio('audio/Local-Elevator.mp3');
+bgAudio.loop = true;
+
+const gameTracks = ['audio/Kool-Kats.mp3', 'audio/Sneaky-Snitch.mp3'];
+let currentGameTrackIndex = 0;
+let gameBGMStarted = false;
+
+function playNextGameTrack() {
+    bgAudio.src = gameTracks[currentGameTrackIndex];
+    bgAudio.loop = false;
+    bgAudio.play().catch(e => console.log('BGM play error:', e));
+    
+    bgAudio.onended = () => {
+        currentGameTrackIndex = (currentGameTrackIndex + 1) % gameTracks.length;
+        playNextGameTrack();
+    };
+}
+
+const unlockAudio = () => {
+    if (bgAudio.paused && !gameBGMStarted) {
+        bgAudio.play().catch(console.error);
+    }
+};
+document.addEventListener('click', unlockAudio, { once: true });
+document.addEventListener('keydown', unlockAudio, { once: true });
+// --------------------
+
 socket.emit('identify', 'display');
 
 function fetchAndDisplayQR() {
@@ -68,6 +101,14 @@ socket.on('updateState', (state) => {
 });
 
 socket.on('roundStart', (data) => {
+    if (!gameBGMStarted) {
+        gameBGMStarted = true;
+        playNextGameTrack();
+    }
+    
+    sfxCamera.currentTime = 0;
+    sfxCamera.play().catch(e => {});
+
     document.body.classList.add('game-started');
 
     // Hide QR code to expand leaderboard
@@ -82,12 +123,12 @@ socket.on('roundStart', (data) => {
     photoImg.style.display = 'block';
     const pin = document.querySelector('#photo-wrapper .pin');
     
-    photoImg.classList.remove('animate-drop');
+    photoImg.classList.remove('animate-drop', 'animate-flash');
     if(pin) pin.classList.remove('animate-stab');
     
     void photoImg.offsetWidth; // Reflow
     
-    photoImg.classList.add('animate-drop');
+    photoImg.classList.add('animate-drop', 'animate-flash');
     if(pin) pin.classList.add('animate-stab');
 
     // Update Info
@@ -115,6 +156,9 @@ socket.on('playerGuessed', (playerId) => {
 });
 
 socket.on('roundResult', (data) => {
+    sfxTypewriter.currentTime = 0;
+    sfxTypewriter.play().catch(e => {});
+
     photoImg.style.display = 'none';
     screenResult.style.display = 'flex';
 
@@ -187,6 +231,10 @@ socket.on('roundResult', (data) => {
 });
 
 socket.on('gameEnd', (playersObj) => {
+    
+    sfxPaper1.currentTime = 0;
+    sfxPaper1.play().catch(e => {});
+
     const players = Object.values(playersObj).sort((a,b) => b.score - a.score);
     const finalBoard = document.getElementById('final-leaderboard');
     finalBoard.innerHTML = '';
@@ -234,6 +282,8 @@ let showingRules = false;
 // Admin Control
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
+        e.preventDefault(); // Prevents "Enter" from triggering a click on the currently focused button
+        
         const loadingMessage = document.getElementById('loading-message');
         const isActive = loadingMessage && loadingMessage.style.display !== 'none';
         
@@ -262,6 +312,14 @@ function showRulesScreen() {
     if (rulesScreen && rulesScreen.classList.contains('hidden')) {
         rulesScreen.classList.remove('hidden');
         showingRules = true;
+        
+        sfxPaper2.currentTime = 0;
+        sfxPaper2.play().catch(e => {});
+        
+        // Remove focus from start button so Enter key doesn't virtually click it again
+        if (document.activeElement && document.activeElement.blur) {
+            document.activeElement.blur();
+        }
     }
 }
 

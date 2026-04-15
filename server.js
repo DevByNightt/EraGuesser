@@ -105,6 +105,7 @@ io.on('connection', (socket) => {
     socket.on('submitGuess', (guess) => {
         if (gameState.phase === 'ROUND' && gameState.players[socket.id]) {
             gameState.players[socket.id].lastGuess = guess;
+            gameState.players[socket.id].guessTimeLeft = gameState.timeLeft; // Record speed
             io.to('display').emit('playerGuessed', socket.id);
             socket.emit('guessReceived');
         }
@@ -202,8 +203,17 @@ function endRound() {
             yearDiff = Math.abs(correct.year - p.lastGuess.year);
             const yearScore = Math.max(0, 2500 - (yearDiff * 50));
 
-            roundScore = distScore + yearScore;
+            const rawAccuracyScore = distScore + yearScore;
+            
+            // Speed Multiplier (Up to 2x bonus for instant answers)
+            const timeRatio = (p.guessTimeLeft || 0) / ROUND_TIME; // 1.0 (fast) down to 0.0 (slow)
+            const speedMultiplier = 1.0 + timeRatio; // 2.0x max, 1.0x min
+            
+            roundScore = Math.floor(rawAccuracyScore * speedMultiplier);
             p.score += roundScore;
+            
+            // Reset for next round
+            p.guessTimeLeft = 0;
         }
 
         results.push({

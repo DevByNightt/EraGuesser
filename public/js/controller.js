@@ -3,6 +3,34 @@ let myId = null;
 let currentGuess = { lat: 0, lng: 0, year: 1950 };
 let hasGuessed = false;
 
+// --- Web Audio API System ---
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const audioBuffers = {};
+
+async function loadSfx(name, path) {
+    try {
+        const response = await fetch(path);
+        const arrayBuffer = await response.arrayBuffer();
+        audioBuffers[name] = await audioCtx.decodeAudioData(arrayBuffer);
+    } catch (e) {
+        console.error("Audio error:", e);
+    }
+}
+loadSfx('agrafe', 'audio/agrafe.mp3');
+loadSfx('cliquetis', 'audio/cliquetis.mp3');
+loadSfx('ding', 'audio/ding.mp3');
+
+function playSfx(name) {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (audioBuffers[name]) {
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuffers[name];
+        source.connect(audioCtx.destination);
+        source.start(0);
+    }
+}
+// ----------------------------
+
 // UI Elements
 const loginScreen = document.getElementById('login-screen');
 const waitingRoom = document.getElementById('waiting-room');
@@ -38,6 +66,9 @@ function initMap() {
     map.on('click', (e) => {
         if (hasGuessed) return;
         if (currentMarker) map.removeLayer(currentMarker);
+        
+        playSfx('agrafe');
+
         currentMarker = L.marker(e.latlng, { icon: redPinIcon }).addTo(map);
         currentGuess.lat = e.latlng.lat;
         currentGuess.lng = e.latlng.lng;
@@ -46,6 +77,7 @@ function initMap() {
 
 // Login Logic
 joinBtn.addEventListener('click', () => {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
     let name = usernameInput.value.trim();
     if (name) {
         if (name.length > 20) name = name.substring(0, 20);
@@ -58,6 +90,9 @@ joinBtn.addEventListener('click', () => {
 // Slider Logic
 yearSlider.addEventListener('input', (e) => {
     if (hasGuessed) return;
+    
+    playSfx('cliquetis');
+    
     yearDisplay.textContent = e.target.value;
     currentGuess.year = parseInt(e.target.value);
 });
@@ -68,6 +103,9 @@ submitBtn.addEventListener('click', () => {
         alert("Placez d'abord un marqueur sur la carte !");
         return;
     }
+    
+    playSfx('ding');
+
     socket.emit('submitGuess', currentGuess);
     lockInterface();
     statusMsg.innerText = "Réponse envoyée ! En attente...";
